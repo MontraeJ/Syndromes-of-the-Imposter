@@ -1,52 +1,28 @@
-/*const mongoose = require("mongoose");
+//to do: Create a schema
+//To do: Create a model from that schema
+
 const Joi = require("joi");
-const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose")
 
-const userSchema = mongoose.Schema({
-  name: { type: String, required: true, minLength: 5, maxLength: 50 },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-    minLength: 2,
-    maxLength: 255,
-  },
-  password: { type: String, required: true, minLength: 8, maxLength: 1024 },
-  isAdmin: { type: Boolean, required: true },
+const commentSchema = new mongoose.Schema({
+    videoID: {type: String, required: true, minlength: 2, maxlength: 250},
+    dateAdded:  {type: Date, default: Date.now()},
+    likes: {type: Number,},
+    dislikes: {type: Number,},
+    comment:{type: String, required: true, minlength: 2, maxlength: 250}
 });
+    //add likes and dislikes for each comment {type: number; comment text to be held on to
 
-userSchema.methods.generateAuthToken = function () {
-  return jwt.sign(
-    {
-      _id: this._id,
-      name: this.name,
-      email: this.email,
-      isAdmin: this.isAdmin,
-    },
-    process.env.JWT_SECRET
-  );
-};
+commentSchema.methods.commentValidate = (comment) => {
+    const schema = Joi.object({
+       likes:Joi.
+       dislikes:Joi.
+    });
+    return schema.validate(comment);
+}
 
-const validateUser = (user) => {
-  const schema = Joi.object({
-    name: Joi.string().min(5).max(50).required(),
-    email: Joi.string().min(5).max(255).required().email(),
-    password: Joi.string().min(5).max(1024).required(),
-    isAdmin: Joi.bool().required(),
-  });
-  return schema.validate(user);
-};
+    const Comment = mongoose.model("Comment", commentSchema);
 
-const validateLogin = (req) => {
-  const schema = Joi.object({
-    email: Joi.string().min(5).max(255).required().email(),
-    password: Joi.string().min(5).max(1024).required(),
-  });
-  return schema.validate(req);
-};
+    module.exports = Comment;
 
-const User = mongoose.model("User", userSchema);
-module.exports.User = User;
-module.exports.userSchema = userSchema;
-module.exports.validateUser = validateUser;
-module.exports.validateLogin = validateLogin;
+ 
