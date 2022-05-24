@@ -4,25 +4,25 @@
 const Joi = require("joi");
 const mongoose = require("mongoose")
 
-const commentSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     videoID: {type: String, required: true, minlength: 2, maxlength: 250},
     dateAdded:  {type: Date, default: Date.now()},
     likes: {type: Number,},
     dislikes: {type: Number,},
-    comment:{type: String, required: true, minlength: 2, maxlength: 250}
+    user:{type: String, required: true, minlength: 2, maxlength: 250}
 });
-    //add likes and dislikes for each comment {type: number; comment text to be held on to
+    //add likes and dislikes for each user {type: number; user text to be held on to
 
-commentSchema.methods.commentValidate = (comment) => {
+userSchema.methods.userValidate = (user) => {
     const schema = Joi.object({
        likes:Joi.
        dislikes:Joi.
     });
-    return schema.validate(comment);
+    return schema.validate(user);
 }
 
-    const Comment = mongoose.model("Comment", commentSchema);
+    const User = mongoose.model("user", userSchema);
 
-    module.exports = Comment;
+    module.exports = User;
 
  

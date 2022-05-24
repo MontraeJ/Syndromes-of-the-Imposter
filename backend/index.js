@@ -7,6 +7,10 @@ const app = express();
 
 const comments = require("./routes/comments");
 
+app.get("/", (req, res) => {
+  res.send("Say what");
+});
+
 connectDb();
 
 //Middleware
@@ -16,6 +20,6 @@ app.use(`/api/comments`, comments);
 
 //Starting a Server=it will listen for requests
 const PORT = process.env.PORT || 5000; //like an address
-app.listen(PORT, () => {
+app.listen(3009, () => {
   console.log(`Server started on port: ${PORT}`);
 });

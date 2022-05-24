@@ -18,6 +18,8 @@ router.post("/", async (req, res) => {//from the frontend
         return res.status(500).send(`Internal Server Error: ${error}`);
     }
 })
+
+router 
 router.get('/', async (req,res) => {
     try {
         const comments = await Comment.find();
